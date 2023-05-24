@@ -177,74 +177,34 @@ export const Room = ({
 
     return (
         <div className={classes.videoContainer}>
-            {controlVisible && (
-                <Paper className={classes.title} elevation={10} {...setHoverState}>
-                    <Tooltip title="Copy Link">
-                        <Typography
-                            variant="h4"
-                            component="h4"
-                            style={{cursor: 'pointer'}}
-                            onClick={copyLink}
-                        >
-                            {state.id}
-                        </Typography>
-                    </Tooltip>
-                </Paper>
-            )}
 
             {stream ? (
                 <video muted ref={setVideoElement} className={videoClasses()} />
             ) : (
-                <Typography
-                    variant="h4"
-                    align="center"
-                    component="div"
-                    style={{
-                        top: '50%',
-                        left: '50%',
+                <>
+                    <div style={{
+                        inset: 0,
                         position: 'absolute',
-                        transform: 'translate(-50%, -50%)',
-                    }}
-                >
-                    no stream available
-                </Typography>
+                        background: 'url(/meeetup.png)',
+                        backgroundRepeat: 'no-repeat',
+                        backgroundPosition: 'center center',
+                        backgroundSize: 'contain',
+                        zIndex: 0}}>
+                    </div>
+                </>
             )}
 
             {controlVisible && (
                 <Paper className={classes.control} elevation={10} {...setHoverState}>
                     {state.hostStream ? (
-                        <Tooltip title="Cancel Presentation" arrow>
                             <IconButton onClick={stopShare} size="large">
                                 <CancelPresentationIcon fontSize="large" />
                             </IconButton>
-                        </Tooltip>
                     ) : (
-                        <Tooltip title="Start Presentation" arrow>
                             <IconButton onClick={share} size="large">
                                 <PresentToAllIcon fontSize="large" />
                             </IconButton>
-                        </Tooltip>
                     )}
-
-                    <Tooltip
-                        classes={{tooltip: classes.noMaxWidth}}
-                        title={
-                            <div>
-                                <Typography variant="h5">Member List</Typography>
-                                {state.users.map((user) => (
-                                    <Typography key={user.id}>
-                                        {user.name} {flags(user)}
-                                    </Typography>
-                                ))}
-                            </div>
-                        }
-                        arrow
-                    >
-                        <Badge badgeContent={state.users.length} color="primary">
-                            <PeopleIcon fontSize="large" />
-                        </Badge>
-                    </Tooltip>
-                    <Tooltip title="Fullscreen" arrow>
                         <IconButton
                             onClick={() => handleFullscreen()}
                             disabled={!selectedStream}
@@ -252,45 +212,38 @@ export const Room = ({
                         >
                             <FullScreenIcon fontSize="large" />
                         </IconButton>
-                    </Tooltip>
-
-                    <Tooltip title="Settings" arrow>
-                        <IconButton onClick={() => setOpen(true)} size="large">
-                            <SettingsIcon fontSize="large" />
-                        </IconButton>
-                    </Tooltip>
                 </Paper>
             )}
 
             <div className={classes.bottomContainer}>
-                {state.clientStreams
-                    .filter(({id}) => id !== selectedStream)
-                    .map((client) => {
-                        return (
-                            <Paper
-                                key={client.id}
-                                elevation={4}
-                                className={classes.smallVideoContainer}
-                                onClick={() => setSelectedStream(client.id)}
-                            >
-                                <Video
-                                    key={client.id}
-                                    src={client.stream}
-                                    className={classes.smallVideo}
-                                />
-                                <Typography
-                                    variant="subtitle1"
-                                    component="div"
-                                    align="center"
-                                    className={classes.smallVideoLabel}
-                                >
-                                    {state.users.find(({id}) => client.peer_id === id)?.name ??
-                                        'unknown'}
-                                </Typography>
-                            </Paper>
-                        );
-                    })}
-                {state.hostStream && selectedStream !== HostStream && (
+                {/*{state.clientStreams*/}
+                {/*    .filter(({id}) => id !== selectedStream)*/}
+                {/*    .map((client) => {*/}
+                {/*        return (*/}
+                {/*            <Paper*/}
+                {/*                key={client.id}*/}
+                {/*                elevation={4}*/}
+                {/*                className={classes.smallVideoContainer}*/}
+                {/*                onClick={() => setSelectedStream(client.id)}*/}
+                {/*            >*/}
+                {/*                <Video*/}
+                {/*                    key={client.id}*/}
+                {/*                    src={client.stream}*/}
+                {/*                    className={classes.smallVideo}*/}
+                {/*                />*/}
+                {/*                <Typography*/}
+                {/*                    variant="subtitle1"*/}
+                {/*                    component="div"*/}
+                {/*                    align="center"*/}
+                {/*                    className={classes.smallVideoLabel}*/}
+                {/*                >*/}
+                {/*                    {state.users.find(({id}) => client.peer_id === id)?.name ??*/}
+                {/*                        'unknown'}*/}
+                {/*                </Typography>*/}
+                {/*            </Paper>*/}
+                {/*        );*/}
+                {/*    })}*/}
+                {state.hostStream && (
                     <Paper
                         elevation={4}
                         className={classes.smallVideoContainer}
@@ -307,12 +260,6 @@ export const Room = ({
                         </Typography>
                     </Paper>
                 )}
-                <SettingDialog
-                    open={open}
-                    setOpen={setOpen}
-                    updateName={setName}
-                    saveSettings={setSettings}
-                />
             </div>
         </div>
     );
@@ -433,7 +380,6 @@ const useStyles = makeStyles((theme: Theme) => ({
         bottom: 0,
         width: '100%',
         height: '100%',
-
         overflow: 'auto',
     },
 }));

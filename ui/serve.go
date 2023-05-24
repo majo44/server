@@ -22,7 +22,8 @@ func Register(r *mux.Router) {
 	r.Handle("/static/{type}/{resource}", http.FileServer(http.FS(files)))
 
 	r.Handle("/favicon.ico", serveFile("favicon.ico", "image/x-icon"))
-	r.Handle("/logo.svg", serveFile("logo.svg", "image/svg+xml"))
+	r.Handle("/ac-logo-white.png", serveFile("ac-logo-white.png", "image/png"))
+	r.Handle("/meeetup.png", serveFile("meeetup.png", "image/png"))
 	r.Handle("/apple-touch-icon.png", serveFile("apple-touch-icon.png", "image/png"))
 	r.Handle("/og-banner.png", serveFile("og-banner.png", "image/png"))
 }
@@ -30,7 +31,7 @@ func Register(r *mux.Router) {
 func serveFile(name, contentType string) http.HandlerFunc {
 	file, err := files.Open(name)
 	if err != nil {
-		log.Panic().Err(err).Msgf("could not find %s", file)
+		log.Panic().Err(err).Msgf("could not find %s", name)
 	}
 	defer file.Close()
 	content, err := io.ReadAll(file)

@@ -50,19 +50,19 @@ const theme = createTheme({
     },
     palette: {
         background: {
-            default: '#282828',
-            paper: '#32302f',
+            default: '#FFFFFF',
+            paper: '#FFFFFF',
         },
         text: {
-            primary: '#fbf1d4',
+            primary: '#000000',
         },
         primary: {
-            main: '#a89984',
+            main: '#ED2A37',
         },
         secondary: {
             main: '#f44336',
         },
-        mode: 'dark',
+        mode: 'light',
     },
 });
 
